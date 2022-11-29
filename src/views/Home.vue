@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <p ref="texto">Meu nome é {{ nome }} e minha idade é {{ idade }}</p>
+    <p>Meu nome é {{ nome }} e minha idade é {{ idade }}</p>
     <button @click="clicar">Aperte</button>
+    <button @click="idade++">+1 na idade</button>
+    <input type="text" v-model="nome">
   </div>
 </template>
 
@@ -11,17 +13,16 @@ import { ref } from 'vue';
 export default {
   name: 'Home',
   setup(){ //roda antes dos livecycle hooks
-    const texto = ref(null);
-
-    let nome = "Mario";
-    let idade = 42;
+    const nome = ref("Mario");
+    const idade = ref(42);
 
     function clicar(){
       console.log("clicou!");
-      texto.value.textContent = "Bah dai né, tava frio";
+      nome.value = "Luigi";
+      idade.value += 1;
     }
 
-    return {nome, idade, clicar, texto};
+    return {nome, idade, clicar};
   }
 }
 </script>
