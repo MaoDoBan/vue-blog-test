@@ -1,28 +1,32 @@
 <template>
   <div class="home">
-    <p>Meu nome é {{ nome }} e minha idade é {{ idade }}</p>
-    <button @click="clicar">Aperte</button>
-    <button @click="idade++">+1 na idade</button>
-    <input type="text" v-model="nome">
+    <h2>Refs</h2>
+    <p>{{ ninja1.nome }} - {{ ninja1.idade }}</p>
+    <button @click="atualizaNinja1">Atualiza Ninja 1</button>
+
+    <h2>Reactive</h2>
+    <p>{{ ninja2.nome }} - {{ ninja2.idade }}</p>
+    <button @click="atualizaNinja2">Atualiza Ninja 2</button>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 
 export default {
   name: 'Home',
   setup(){ //roda antes dos livecycle hooks
-    const nome = ref("Mario");
-    const idade = ref(42);
+    const ninja1 = ref({nome: "Mario", idade: 42});
+    const ninja2 = reactive({nome: "Luigi", idade: 45});
 
-    function clicar(){
-      console.log("clicou!");
-      nome.value = "Luigi";
-      idade.value += 1;
+    function atualizaNinja1(){
+      ninja1.value.idade++;
+    }
+    function atualizaNinja2(){
+      ninja2.idade++;
     }
 
-    return {nome, idade, clicar};
+    return {ninja1, ninja2, atualizaNinja1, atualizaNinja2};
   }
 }
 </script>
