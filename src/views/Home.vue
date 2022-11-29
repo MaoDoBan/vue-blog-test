@@ -1,32 +1,24 @@
 <template>
   <div class="home">
-    <h2>Refs</h2>
-    <p>{{ ninja1.nome }} - {{ ninja1.idade }}</p>
-    <button @click="atualizaNinja1">Atualiza Ninja 1</button>
-
-    <h2>Reactive</h2>
-    <p>{{ ninja2.nome }} - {{ ninja2.idade }}</p>
-    <button @click="atualizaNinja2">Atualiza Ninja 2</button>
+    <input type="text" v-model="busca">
+    <div v-for="nome in resultado" :key="nome">{{nome}}</div>
   </div>
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { computed, ref } from 'vue';
 
 export default {
   name: 'Home',
   setup(){ //roda antes dos livecycle hooks
-    const ninja1 = ref({nome: "Mario", idade: 42});
-    const ninja2 = reactive({nome: "Luigi", idade: 45});
+    const busca = ref("");
+    const nomes = ref(["maria", "luisa", "julia", "lais", "duda", "debora", "leia", "ana", "leticia"]);
 
-    function atualizaNinja1(){
-      ninja1.value.idade++;
-    }
-    function atualizaNinja2(){
-      ninja2.idade++;
-    }
+    const resultado = computed(() => nomes.value.filter(
+      nome => nome.includes(busca.value)
+    ));
 
-    return {ninja1, ninja2, atualizaNinja1, atualizaNinja2};
+    return {busca, resultado};
   }
 }
 </script>
