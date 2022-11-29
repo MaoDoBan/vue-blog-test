@@ -1,24 +1,24 @@
 <template>
   <div class="home">
-    <input type="text" v-model="busca">
-    <div v-for="nome in resultado" :key="nome">{{nome}}</div>
+    <h1>Home</h1>
+    <PostList :posts="posts"/>
   </div>
 </template>
 
 <script>
+import PostList from "../components/PostList.vue";
 import { computed, ref } from 'vue';
 
 export default {
-  name: 'Home',
+  name: "Home",
+  components: { PostList },
   setup(){ //roda antes dos livecycle hooks
-    const busca = ref("");
-    const nomes = ref(["maria", "luisa", "julia", "lais", "duda", "debora", "leia", "ana", "leticia"]);
+    const posts = ref([
+      { title: "welcome to the blog", body: "Lorem ipsum", id: 1 },
+      { title: "top 5 CSS tips", body: "lorem ipsum dois", id: 2 },
+    ]);
 
-    const resultado = computed(() => nomes.value.filter(
-      nome => nome.includes(busca.value)
-    ));
-
-    return {busca, resultado};
+    return { posts };
   }
 }
 </script>
