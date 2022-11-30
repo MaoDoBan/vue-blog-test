@@ -1,13 +1,21 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <PostList :posts="posts"/>
+    <div v-if="erro">{{ erro }}</div>
+    <div v-if="posts.length">
+      <PostList :posts="posts"/>
+    </div>
+    <div v-else>Carregando...</div>
   </div>
 </template>
 
 <script>
 import PostList from "../components/PostList.vue";
 import { ref } from 'vue';
+
+async function espera(tempo){ //usar com await antes
+  return new Promise(resolva => setTimeout(resolva, tempo));
+}
 
 export default {
   name: "Home",
@@ -17,6 +25,7 @@ export default {
     const erro = ref(null);
 
     const load = async () => {
+      await espera(1500);
       try{
         let data = await fetch("http://localhost:3000/posts");
         if(!data.ok) throw Error("BD foi de arrasta pra cima!");
@@ -28,7 +37,7 @@ export default {
     };
     load();
 
-    return { posts };
+    return { posts, erro };
   }
 }
 </script>
