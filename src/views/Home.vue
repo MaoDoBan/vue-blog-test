@@ -7,7 +7,7 @@
 
 <script>
 import PostList from "../components/PostList.vue";
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 export default {
   name: "Home",
