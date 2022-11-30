@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <PostList :posts="posts"/>
+    <PostList v-if="mostrarPosts" :posts="posts"/>
+    <button @click="mostrarPosts = !mostrarPosts">Toggle posts</button>
   </div>
 </template>
 
@@ -18,7 +19,9 @@ export default {
       { title: "top 5 CSS tips", body: "lorem ipsum dois", id: 2 },
     ]);
 
-    return { posts };
+    const mostrarPosts = ref(true);
+
+    return { posts, mostrarPosts };
   }
 }
 </script>
