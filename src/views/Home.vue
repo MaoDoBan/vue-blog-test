@@ -1,8 +1,7 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <PostList v-if="mostrarPosts" :posts="posts"/>
-    <button @click="mostrarPosts = !mostrarPosts">Toggle posts</button>
+    <PostList :posts="posts"/>
   </div>
 </template>
 
@@ -14,14 +13,22 @@ export default {
   name: "Home",
   components: { PostList },
   setup(){ //roda antes dos livecycle hooks
-    const posts = ref([
-      { title: "welcome to the blog", body: "Lorem ipsum", id: 1 },
-      { title: "top 5 CSS tips", body: "lorem ipsum dois", id: 2 },
-    ]);
+    const posts = ref([]);
+    const erro = ref(null);
 
-    const mostrarPosts = ref(true);
+    const load = async () => {
+      try{
+        let data = await fetch("http://localhost:3000/posts");
+        if(!data.ok) throw Error("BD foi de arrasta pra cima!");
+        posts.value = await data.json();
+      }catch(deuRuin){
+        erro.value = deuRuin.message;
+        console.log("ERRO:", erro.value);
+      }
+    };
+    load();
 
-    return { posts, mostrarPosts };
+    return { posts };
   }
 }
 </script>

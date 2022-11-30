@@ -12,7 +12,7 @@ export default {
   props: ["post"],
   setup(props){
     const inicioTexto = computed(() => {
-      return props.post.body.substring(0, 5) + "...";
+      return props.post.body.substring(0, 35) + "...";
     });
 
     return { inicioTexto };
